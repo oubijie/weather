@@ -37,7 +37,15 @@ public class WeatherServlet extends HttpServlet {
 			}
 		}
 		
-		resp.getWriter().write(JSON.toJSONString(map));
+		//JSONP改造，如果带jsoncallback参数，则以jsonp形式返回数据
+		String callback = req.getParameter("jsoncallback");
+		if(callback!=null && !callback.trim().equals("")) {
+			resp.getWriter().write(callback+"(");
+			resp.getWriter().write(JSON.toJSONString(map));
+			resp.getWriter().write(");");
+		}else {
+			resp.getWriter().write(JSON.toJSONString(map));
+		}
 		resp.getWriter().flush();
 	}
 	

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>JSONP 实例</title>
+    <script src="https://cdn.static.runoob.com/libs/jquery/1.8.3/jquery.js"></script>    
+</head>
+<body>
+<div id="divCustomers"></div>
+<script>
+$.getJSON("http://localhost:8080/weather/api/weather?cityName=%E5%B4%87%E5%B7%A6&jsoncallback=?", function(data) {
+    
+   $('#divCustomers').html(data.cityInfo.city);
+});
+</script>
+</body>
+</html>
