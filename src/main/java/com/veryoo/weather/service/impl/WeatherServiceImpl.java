@@ -12,6 +12,7 @@ import org.apache.commons.io.IOUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.veryoo.weather.service.WeatherService;
+import com.veryoo.weather.utils.CityMap;
 
 public class WeatherServiceImpl implements WeatherService {
 
@@ -28,8 +29,19 @@ public class WeatherServiceImpl implements WeatherService {
 
 	@Override
 	public Map getWeatherDataByCityName(String cityName) {
-		// TODO Auto-generated method stub
-		return null;
+		Map map = null;
+		String cityCode = CityMap.getCityCodeByName(cityName);
+		if(cityCode == null) {
+			System.err.println("未找到该城市名称！");
+			map = new HashMap();
+			map.put("status", 500);
+			map.put("message", "未找到该城市名称！");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			map.put("date", sdf.format(new Date()));
+		}else{
+			map = getWeatherDataByCityCode(cityCode);
+		}
+		return map;
 	}
 	
 	
