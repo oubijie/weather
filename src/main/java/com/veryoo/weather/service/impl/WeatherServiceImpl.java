@@ -1,8 +1,6 @@
 package com.veryoo.weather.service.impl;
 
-import java.io.InputStream;
 import java.net.URL;
-import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -69,9 +67,7 @@ public class WeatherServiceImpl implements WeatherService {
 		try {
 			System.out.println("开始通过API获取天气数据");
 			URL url = new URL("http://t.weather.sojson.com/api/weather/city/"+cityCode);
-			URLConnection open = url.openConnection();
-			InputStream input = open.getInputStream();
-			String result = IOUtils.toString(input,"utf-8");
+			String result = IOUtils.toString(url,"utf-8");
 			System.out.println(result);
 			map = JSON.parseObject(result);
 		} catch (Exception e) {
