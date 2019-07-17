@@ -13,5 +13,9 @@
 
 <p>返回格式皆为json，具体格式请参考<a href="https://www.sojson.com/blog/305.html" target="_blank">https://www.sojson.com/blog/305.html</a></p>
 <p><a href="city.html" target="_blank">城市名称及代码对应表</a></p>
+
+<h2>使用JSONP形式调用，增加参数jsoncallback</h2>
+<p>http://localhost:8080/weather/api/weather?cityCode=101300101&jsoncallback=foo</p>
+<p>http://localhost:8080/weather/api/weather?cityName=南宁&jsoncallback=foo</p>
 </body>
 </html>
