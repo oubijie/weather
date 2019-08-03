@@ -48,7 +48,7 @@ JSONP
    http://localhost:8080/weather/api/weather?cityName=南宁&jsoncallback=foo
    ```
 
-####接口成功返回值
+#### 接口成功返回值
 ```json
 {
     "time": "2018-09-22 12:37:21",//系统更新时间
