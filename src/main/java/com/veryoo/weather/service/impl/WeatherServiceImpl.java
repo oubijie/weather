@@ -14,6 +14,7 @@ import com.veryoo.weather.utils.CityDataUtil;
 
 public class WeatherServiceImpl implements WeatherService {
 
+	//本地缓存的天气数据
 	public static Map<String, Map> cacheData = new HashMap();
 
 	/**
