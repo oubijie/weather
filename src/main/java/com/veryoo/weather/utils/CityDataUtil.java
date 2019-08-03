@@ -12,8 +12,14 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
-
-public class CityMap {
+/**
+ * 城市代码和城市名称的转换工具，通过读取city.json内的城市代码和名称对应关系，提供城市代码和名称的转换功能。
+ * @author obj
+ * @email oubijie@139.com
+ * @vserion 2019年8月4日
+ *
+ */
+public class CityDataUtil {
 
 	private static Map<String, String> city;
 	
@@ -36,6 +42,11 @@ public class CityMap {
 		}
 	}
 	
+	/**
+	 * 将城市名称转换成城市代码
+	 * @param cityName
+	 * @return
+	 */
 	public static String getCityCodeByName(String cityName) {
 		return city.get(cityName);
 	}

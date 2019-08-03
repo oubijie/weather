@@ -10,12 +10,16 @@ import org.apache.commons.io.IOUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.veryoo.weather.service.WeatherService;
-import com.veryoo.weather.utils.CityMap;
+import com.veryoo.weather.utils.CityDataUtil;
 
 public class WeatherServiceImpl implements WeatherService {
 
-	public static Map<String, Map> data = new HashMap();
+	public static Map<String, Map> cacheData = new HashMap();
 
+	/**
+	 * 通过城市代码查询天气
+	 * 先在本地缓存中查询，如果缓存没有再去外部接口查询
+	 */
 	@Override
 	public Map getWeatherDataByCityCode(String cityCode) {
 		Map map = getWeatherDataFromCache(cityCode);
@@ -25,10 +29,16 @@ public class WeatherServiceImpl implements WeatherService {
 		return map;
 	}
 
+	
+	/**
+	 * 通过城市名称查询天气
+	 * 先把城市名称转换成城市代码，再通过城市代码查询天气
+	 * 城市名称和城市代码对应关系存放在city.json文件中
+	 */
 	@Override
 	public Map getWeatherDataByCityName(String cityName) {
 		Map map = null;
-		String cityCode = CityMap.getCityCodeByName(cityName);
+		String cityCode = CityDataUtil.getCityCodeByName(cityName);
 		if(cityCode == null) {
 			System.err.println("未找到该城市名称！");
 			map = new HashMap();
@@ -43,9 +53,14 @@ public class WeatherServiceImpl implements WeatherService {
 	}
 	
 	
+	/**
+	 * 在本地缓存中查询城市天气
+	 * @param cityCode
+	 * @return
+	 */
 	private Map getWeatherDataFromCache(String cityCode) {
 		System.out.println("尝试通过缓存获取天气信息");
-		Map map = data.get(cityCode);
+		Map map = cacheData.get(cityCode);
 		if(map != null) {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 			String today = sdf.format(new Date());
@@ -62,6 +77,12 @@ public class WeatherServiceImpl implements WeatherService {
 		return map;
 	}
 	
+	
+	/**
+	 * 使用sojson.com的开放天气api查询城市天气
+	 * @param cityCode
+	 * @return
+	 */
 	private Map getWeatherDataFromApi(String cityCode) {
 		Map map = null;
 		try {
@@ -79,7 +100,7 @@ public class WeatherServiceImpl implements WeatherService {
 			map.put("date", sdf.format(new Date()));
 		}
 		
-		data.put(cityCode, map);  //获取的数据放到缓存
+		cacheData.put(cityCode, map);  //获取的数据放到缓存
 		
 		return map;
 	}
